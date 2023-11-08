@@ -1,0 +1,69 @@
+import numpy as np
+import random
+import math
+import matplotlib.pyplot as plt
+import csv
+
+# Variables and functions definition
+def distance(x, y):
+    return np.linalg.norm(np.array(x) - np.array(y))
+
+# Read addresses from a CSV file
+addresses = []
+with open('addresses.csv', mode='r') as file:
+    csv_reader = csv.DictReader(file)
+    for row in csv_reader:
+        x = int(row['X'])
+        y = int(row['Y'])
+        addresses.append((x, y))
+
+# Genetic Algorithm
+class GeneticAlgorithmTSP:
+    def __init__(self, num_addresses, population_size=100, elite_size=20, mutation_rate=0.01):
+        self.num_addresses = num_addresses
+        self.population_size = population_size
+        self.elite_size = elite_size
+        self.mutation_rate = mutation_rate
+
+    def create_route(self, addresses):
+        route = random.sample(addresses, len(addresses))
+        route.insert(0, (0, 0))  # add address 0 at the beginning
+        route.append((0, 0))  # add address 0 at the end
+        return route
+
+    # Rest of the Genetic Algorithm code remains the same
+    # ...
+
+# Simulated Annealing Algorithm
+def total_distance(route):
+    return sum(distance(route[i], route[i + 1]) for i in range(len(route) - 1))
+
+def simulated_annealing(addresses, num_iter=10000, initial_temperature=1000, cooling_rate=0.003):
+    current_route = [(0, 0)] + addresses + [(0, 0)]
+    best_route = list(current_route)
+    min_dist = total_distance(best_route)
+    temperature = initial_temperature
+
+    for _ in range(num_iter):
+        # Rest of the Simulated Annealing code remains the same
+        # ...
+
+# Computing using Genetic Algorithm
+genetic_algorithm = GeneticAlgorithmTSP(len(addresses), population_size=100, elite_size=20, mutation_rate=0.01)
+initial_population = genetic_algorithm.initial_population(addresses)
+
+for i in range(1000):
+    initial_population = genetic_algorithm.next_generation(initial_population)
+
+# Computing using Simulated Annealing
+sa_shortest_route, sa_min_dist = simulated_annealing(addresses)
+
+# Rest of your code for Nearest Neighbor and Branch and Bound remains the same
+
+# Comparison and Visualization
+# ...
+
+# Plotting the results
+# ...
+
+plt.show()
